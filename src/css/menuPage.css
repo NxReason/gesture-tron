@@ -46,4 +46,16 @@
   width: 40px;
   text-align: center;
   border-bottom-width: 2px;
+  cursor: pointer;
+}
+.custom-timer-input::selection {
+  background-color: var(--bg-color);
+}
+
+.timer-button.active {
+  border: 2px solid var(--text-color);
+}
+
+.custom-timer-input.no-border {
+  border: none;
 }

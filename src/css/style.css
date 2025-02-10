@@ -3,3 +3,40 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+:root {
+  --text-color: #eee;
+  --bg-color: #222;
+  --main-color: #4925aa;
+  --secondary-color: #4444c7;
+}
+
+html {
+  font: 16px 'Host Grotesk', 'Open Sans', 'Roboto', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Page layout */
+.container {
+  display: flex;
+  flex-direction: column;
+}
+header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+/* Elements */
+input[type='text'] {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--text-color);
+  font: inherit;
+  color: var(--text-color);
+}
+input[type='text']:focus {
+  outline: none;
+}

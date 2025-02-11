@@ -1,21 +1,53 @@
+import Events, { EventT } from './events';
+
 export const FolderPicker = {
   init() {
     const section = document.createElement('section');
+    section.classList.add('folder-picker');
 
-    section.append(this.createIcon(), this.createFolderName());
+    this.icon = this.createIcon();
+    this.folderName = this.createFolderName();
+    section.append(this.icon, this.folderName);
+    this.setHandlers();
+
+    this.node = section;
   },
 
   createIcon() {
-    const span = document.createElement('span');
-    span.classList.add('icon', 'icon-folder');
+    const icon = document.createElement('span');
+    icon.classList.add('icon', 'icon-folder');
 
-    return span;
+    return icon;
   },
 
   createFolderName() {
     const p = document.createElement('p');
     p.classList.add('folder-name');
+    p.textContent = 'Chose a folder with images to practice';
 
     return p;
+  },
+
+  setHandlers() {
+    const callDirDialog = async () => {
+      try {
+        const result = await directory.open();
+        Events.notify(EventT.IMAGES_LOADED, result);
+      } catch (err) {
+        console.error(`error opening dir: ${err}`);
+        return { err: `Something went wrong`, folder: null, images: [] };
+      }
+    };
+
+    this.icon.addEventListener('click', callDirDialog);
+    this.folderName.addEventListener('click', callDirDialog);
+  },
+
+  displayError(err) {
+    this.folderName.textContent = err;
+  },
+
+  displayFolderName(folder) {
+    this.folderName.textContent = folder;
   },
 };

@@ -40,3 +40,9 @@ input[type='text'] {
 input[type='text']:focus {
   outline: none;
 }
+.icon {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  background-repeat: no-repeat;
+}

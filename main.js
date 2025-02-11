@@ -1,5 +1,6 @@
-const { app, BrowserWindow } = require('electron/main');
+const { app, BrowserWindow, ipcMain } = require('electron/main');
 const path = require('node:path');
+const { getImages } = require('./backend/dir');
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -16,6 +17,7 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  ipcMain.handle('OPEN_DIR', getImages);
   createWindow();
 
   app.on('activate', () => {

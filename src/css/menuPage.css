@@ -1,7 +1,7 @@
 .menu-page {
   display: grid;
   grid-template-columns: 100px 1fr;
-  grid-template-rows: 100px 1fr;
+  grid-template-rows: 50px 1fr;
   grid-template-areas:
     'sidebar folder-picker'
     'sidebar preview';
@@ -10,6 +10,7 @@
   min-height: 600px;
 }
 
+/* --- Sidebar --- */
 .sidebar {
   grid-area: sidebar;
   display: flex;
@@ -58,4 +59,32 @@
 
 .custom-timer-input.no-border {
   border: none;
+}
+
+/* --- Folder picker --- */
+.folder-picker {
+  grid-area: folder-picker;
+  display: flex;
+  align-items: center;
+}
+
+.icon-folder {
+  background-image: url('../icons/folder.svg');
+  background-size: 2rem;
+}
+.folder-name {
+  padding-left: 0.5rem;
+}
+.icon-folder,
+.folder-name {
+  cursor: pointer;
+}
+
+/* --- Preview --- */
+.preview {
+  grid-area: preview;
+}
+.preview-image {
+  width: 300px;
+  height: 300px;
 }

@@ -1,12 +1,14 @@
 import Events, { EventType } from './events';
 
+const DEFAULT_MSG = 'Chose a folder with images to practice';
+
 export const FolderPicker = {
-  init() {
+  init(folder) {
     const section = document.createElement('section');
     section.classList.add('folder-picker');
 
     this.icon = this.createIcon();
-    this.folderName = this.createFolderName();
+    this.folderName = this.createFolderName(folder ?? DEFAULT_MSG);
     section.append(this.icon, this.folderName);
     this.setHandlers();
 
@@ -20,10 +22,10 @@ export const FolderPicker = {
     return icon;
   },
 
-  createFolderName() {
+  createFolderName(msg) {
     const p = document.createElement('p');
     p.classList.add('folder-name');
-    p.textContent = 'Chose a folder with images to practice';
+    p.textContent = msg;
 
     return p;
   },

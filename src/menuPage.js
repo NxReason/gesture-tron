@@ -10,6 +10,7 @@ const MenuPage = {
     this.container.classList.add('menu-page');
     this.practice = {
       seconds: this.prevPractice?.seconds,
+      folder: this.prevPractice?.folder,
       images: this.prevPractice?.images ?? [],
     };
 
@@ -20,21 +21,21 @@ const MenuPage = {
         return;
       }
       this.practice.images = response.images;
+      this.practice.folder = response.folder;
       FolderPicker.displayFolderName(response.folder);
       Preview.setImages(response.images);
     });
 
     Events.listen(EventType.TIMER_SET, seconds => {
-      console.log('seconds set');
       this.practice.seconds = seconds;
     });
 
     // Components
-    Sidebar.init();
+    Sidebar.init(this.practice.seconds);
 
-    FolderPicker.init();
+    FolderPicker.init(this.practice.folder);
 
-    Preview.init();
+    Preview.init(this.practice.images);
 
     // DOM
     this.container.append(Sidebar.node, FolderPicker.node, Preview.node);

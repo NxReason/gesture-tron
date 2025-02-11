@@ -5,8 +5,10 @@ import {
 } from './timerButton';
 import Events, { EventType } from './events.js';
 
+const DEFAULT_DURATION = 120;
+
 export const Sidebar = {
-  init(buttons) {
+  init(defaultDuration) {
     this.node = document.createElement('div');
     this.node.classList.add('sidebar');
 
@@ -17,7 +19,10 @@ export const Sidebar = {
 
     StartButton.init();
     this.node.append(StartButton.node);
+
+    this.setDefaultDuration(defaultDuration ?? DEFAULT_DURATION);
   },
+
   createTimerButtonsList(buttons) {
     const ul = document.createElement('ul');
     ul.classList.add('timer-button-list');
@@ -67,10 +72,20 @@ export const Sidebar = {
     });
     this.customTimer = customTimer;
 
-    // set default timer
-    this.updateSelectedPresetTimer(buttons[0].node, buttons[0].data);
-
     return ul;
+  },
+
+  setDefaultDuration(dur) {
+    this.updateSelectedPresetTimer(
+      this.presetTimers[0].node,
+      this.presetTimers[0].data
+    );
+    this.presetTimers.forEach(pt => {
+      if (pt.data.seconds === dur) {
+        this.updateSelectedPresetTimer(pt.node, pt.data);
+        return;
+      }
+    });
   },
 
   highlightActiveNode(node) {

@@ -1,9 +1,10 @@
 export const Preview = {
-  init() {
+  init(images) {
     const section = document.createElement('section');
     section.classList.add('preview');
 
     this.node = section;
+    this.setImages(images);
   },
 
   setImages(images) {

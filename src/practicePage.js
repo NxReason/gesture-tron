@@ -106,6 +106,12 @@ const PracticePage = {
       this.stopped = false;
       this.showSlide(this.slides[++this.slideIndex]);
     });
+
+    // end session
+    this.endBtn.addEventListener('click', () => {
+      this.currentSlide?.stop();
+      Events.notify(EventType.END_SESSION);
+    });
   },
 
   run() {
@@ -114,14 +120,12 @@ const PracticePage = {
         new Slide(
           { node: this.img, path: img.relativeLocalPath },
           this.progressBar,
-          10
+          this.seconds
         )
     );
 
     this.showSlide(this.slides[this.slideIndex]);
     Events.listen(EventType.SLIDE_END, () => {
-      console.log('end', this);
-
       if (this.slideIndex + 1 < this.slides.length) {
         this.showSlide(this.slides[++this.slideIndex]);
       }
@@ -140,6 +144,10 @@ const PracticePage = {
     this.prevBtn.disabled = this.slideIndex <= 0;
     this.nextBtn.disabled = this.slideIndex + 1 >= this.images.length;
     this.stopBtn.textContent = this.stopped ? 'Go again' : 'Stop';
+  },
+
+  clear() {
+    this.container.textContent = '';
   },
 };
 

@@ -68,8 +68,8 @@ const App = {
   init() {
     this.clearContainerClasses();
     // for dev only
-    // MenuPage.init(appContainer);
-    PracticePage.init(appContainer, practiceDevData);
+    MenuPage.init(appContainer);
+    // PracticePage.init(appContainer, practiceDevData);
 
     Events.listen(EventType.START_SESSION, () => {
       if (MenuPage.canStartSession()) {
@@ -79,10 +79,16 @@ const App = {
         PracticePage.init(appContainer, sessionParams);
       }
     });
+
+    Events.listen(EventType.END_SESSION, () => {
+      PracticePage.clear();
+      this.clearContainerClasses();
+      MenuPage.init(appContainer);
+    });
   },
 
   clearContainerClasses() {
-    appContainer.classList.remove('menu-page', 'session-page');
+    appContainer.classList.remove('menu-page', 'practice-page');
   },
 };
 App.init();

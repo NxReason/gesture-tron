@@ -1,6 +1,7 @@
 export const EventT = Object.create(null);
 EventT.TIMER_SET = 'TIMER_SET';
 EventT.IMAGES_LOADED = 'IMAGES_LOADED';
+EventT.START_SESSION = 'START_SESSION';
 
 const Events = {
   store: new Map(), // string: [func]

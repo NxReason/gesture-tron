@@ -40,6 +40,18 @@ input[type='text'] {
 input[type='text']:focus {
   outline: none;
 }
+.btn {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-color: var(--main-color);
+  border: none;
+  transition: background-color 0.25s ease;
+}
+.btn:hover {
+  cursor: pointer;
+  background-color: var(--secondary-color);
+}
 .icon {
   display: inline-block;
   width: 2rem;

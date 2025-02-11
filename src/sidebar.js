@@ -10,6 +10,9 @@ export const Sidebar = {
 
     const timerBtnList = this.createTimerButtonsList(buttons);
     this.node.append(timerBtnList);
+
+    StartButton.init();
+    this.node.append(StartButton.node);
   },
   createTimerButtonsList(buttons) {
     const ul = document.createElement('ul');
@@ -100,5 +103,30 @@ export const Sidebar = {
     interval = interval === '' ? 's' : interval;
     const timerData = createTimerButtonData(duration, interval);
     return timerData;
+  },
+};
+
+const StartButton = {
+  init() {
+    this.node = this.createStartButton();
+    this.setHandlers();
+  },
+
+  createStartButton() {
+    const button = document.createElement('button');
+    button.classList.add('btn', 'start-btn');
+
+    const icon = document.createElement('span');
+    icon.classList.add('icon', 'start-icon');
+
+    button.append(icon);
+
+    return button;
+  },
+
+  setHandlers() {
+    this.node.addEventListener('click', () => {
+      Events.notify(EventT.START_SESSION);
+    });
   },
 };

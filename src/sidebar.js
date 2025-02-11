@@ -1,4 +1,8 @@
-import { createCustomTimerInput, createTimerButtonData } from './timerButton';
+import {
+  createCustomTimerInput,
+  createTimerButtonData,
+  createTimerButtons,
+} from './timerButton';
 import Events, { EventT } from './events.js';
 
 export const Sidebar = {
@@ -6,9 +10,9 @@ export const Sidebar = {
     this.node = document.createElement('div');
     this.node.classList.add('sidebar');
 
-    this.presetTimers = buttons;
+    this.presetTimers = createTimerButtons();
 
-    const timerBtnList = this.createTimerButtonsList(buttons);
+    const timerBtnList = this.createTimerButtonsList(this.presetTimers);
     this.node.append(timerBtnList);
 
     StartButton.init();
@@ -63,6 +67,7 @@ export const Sidebar = {
     });
     this.customTimer = customTimer;
 
+    // set default timer
     this.updateSelectedPresetTimer(buttons[0].node, buttons[0].data);
 
     return ul;

@@ -1,6 +1,5 @@
 import './css/menuPage.css';
 import Events, { EventT } from './events';
-import { createTimerButtons } from './timerButton';
 import { Sidebar } from './sidebar';
 import { FolderPicker } from './folderPicker';
 import { Preview } from './preview';
@@ -10,17 +9,9 @@ const MenuPage = {
     this.container = container;
     this.container.classList.add('menu-page');
     this.practice = {
-      seconds: null,
-      images: [],
+      seconds: this.prevPractice?.seconds,
+      images: this.prevPractice?.images ?? [],
     };
-
-    // Components
-    const timerButtons = createTimerButtons();
-    Sidebar.init(timerButtons);
-
-    FolderPicker.init();
-
-    Preview.init();
 
     // Events
     Events.listen(EventT.IMAGES_LOADED, response => {
@@ -34,10 +25,16 @@ const MenuPage = {
     });
 
     Events.listen(EventT.TIMER_SET, seconds => {
+      console.log('seconds set');
       this.practice.seconds = seconds;
     });
 
-    Events.listen(EventT.START_SESSION, () => {});
+    // Components
+    Sidebar.init();
+
+    FolderPicker.init();
+
+    Preview.init();
 
     // DOM
     this.container.append(Sidebar.node, FolderPicker.node, Preview.node);
@@ -51,6 +48,11 @@ const MenuPage = {
 
   getPracticeData() {
     return this.practice;
+  },
+
+  clear() {
+    this.prevPractice = this.getPracticeData();
+    this.container.textContent = '';
   },
 };
 

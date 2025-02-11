@@ -1,4 +1,4 @@
-import Events, { EventT } from './events';
+import Events, { EventType } from './events';
 
 export const FolderPicker = {
   init() {
@@ -32,7 +32,7 @@ export const FolderPicker = {
     const callDirDialog = async () => {
       try {
         const result = await directory.open();
-        Events.notify(EventT.IMAGES_LOADED, result);
+        Events.notify(EventType.IMAGES_LOADED, result);
       } catch (err) {
         console.error(`error opening dir: ${err}`);
         return { err: `Something went wrong`, folder: null, images: [] };

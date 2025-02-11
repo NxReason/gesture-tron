@@ -69,6 +69,10 @@
     padding: 0.5rem;
   }
 
+  .btn:disabled {
+    background-color: gray;
+  }
+
   .end-session-btn {
     width: 120px;
     justify-self: end;

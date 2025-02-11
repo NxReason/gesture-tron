@@ -1,6 +1,6 @@
 import MenuPage from './menuPage';
 import PracticePage from './practicePage';
-import Events, { EventT } from './events';
+import Events, { EventType } from './events';
 
 const appContainer = document.getElementById('app');
 
@@ -71,7 +71,7 @@ const App = {
     // MenuPage.init(appContainer);
     PracticePage.init(appContainer, practiceDevData);
 
-    Events.listen(EventT.START_SESSION, () => {
+    Events.listen(EventType.START_SESSION, () => {
       if (MenuPage.canStartSession()) {
         const sessionParams = MenuPage.getPracticeData();
         MenuPage.clear();

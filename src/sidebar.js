@@ -3,7 +3,7 @@ import {
   createTimerButtonData,
   createTimerButtons,
 } from './timerButton';
-import Events, { EventT } from './events.js';
+import Events, { EventType } from './events.js';
 
 export const Sidebar = {
   init(buttons) {
@@ -93,7 +93,7 @@ export const Sidebar = {
   },
 
   emitUpdateEvent() {
-    Events.notify(EventT.TIMER_SET, this.selected.data.seconds);
+    Events.notify(EventType.TIMER_SET, this.selected.data.seconds);
   },
 
   parseTimerData(str) {
@@ -131,7 +131,7 @@ const StartButton = {
 
   setHandlers() {
     this.node.addEventListener('click', () => {
-      Events.notify(EventT.START_SESSION);
+      Events.notify(EventType.START_SESSION);
     });
   },
 };

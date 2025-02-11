@@ -1,5 +1,5 @@
 import './css/menuPage.css';
-import Events, { EventT } from './events';
+import Events, { EventType } from './events';
 import { Sidebar } from './sidebar';
 import { FolderPicker } from './folderPicker';
 import { Preview } from './preview';
@@ -14,7 +14,7 @@ const MenuPage = {
     };
 
     // Events
-    Events.listen(EventT.IMAGES_LOADED, response => {
+    Events.listen(EventType.IMAGES_LOADED, response => {
       if (response.err != null) {
         FolderPicker.displayError(response.err);
         return;
@@ -24,7 +24,7 @@ const MenuPage = {
       Preview.setImages(response.images);
     });
 
-    Events.listen(EventT.TIMER_SET, seconds => {
+    Events.listen(EventType.TIMER_SET, seconds => {
       console.log('seconds set');
       this.practice.seconds = seconds;
     });

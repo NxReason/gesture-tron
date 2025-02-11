@@ -1,4 +1,6 @@
 import './css/practicePage.css';
+import Events, { EventType } from './events';
+import Slide from './slide';
 
 const PracticePage = {
   init(container, params) {
@@ -8,8 +10,10 @@ const PracticePage = {
     this.seconds = params.seconds;
     this.images = params.images;
 
+    this.slideIndex = 0;
+
     this.initComponents();
-    this.start();
+    this.run();
   },
 
   initComponents() {
@@ -39,8 +43,6 @@ const PracticePage = {
     fg.classList.add('progress-bar-fg');
     const percent = document.createElement('span');
     percent.classList.add('progress-bar-percent');
-    // dev
-    percent.textContent = '30%';
 
     progressBar.append(bg, fg, percent);
 
@@ -54,6 +56,7 @@ const PracticePage = {
     const prevBtn = document.createElement('button');
     prevBtn.classList.add('btn', 'prev-img-btn');
     prevBtn.textContent = `Prev`;
+    prevBtn.disabled = true;
 
     const stopBtn = document.createElement('button');
     stopBtn.classList.add('btn', 'stop-session-btn');
@@ -68,19 +71,75 @@ const PracticePage = {
     endBtn.textContent = `End Session`;
 
     controls.append(prevBtn, stopBtn, nextBtn, endBtn);
+    this.prevBtn = prevBtn;
+    this.stopBtn = stopBtn;
+    this.nextBtn = nextBtn;
+    this.endBtn = endBtn;
+    this.setControlHandlers();
 
     this.container.append(controls);
     this.controls = controls;
   },
 
-  start() {
-    this.imageInterval = setInterval(() => {
-      console.log('int');
-    }, this.seconds * 100);
+  setControlHandlers() {
+    // stop / resume
+    this.stopped = false;
+    const stop = () => {
+      this.currentSlide.stop();
+      this.stopBtn.textContent = 'Go again';
+    };
+    const resume = () => {
+      this.currentSlide.start();
+      this.stopBtn.textContent = 'Stop';
+    };
+    this.stopBtn.addEventListener('click', () => {
+      this.stopped ? resume() : stop();
+      this.stopped = !this.stopped;
+    });
+
+    // prev / next
+    this.prevBtn.addEventListener('click', () => {
+      this.stopped = false;
+      this.showSlide(this.slides[--this.slideIndex]);
+    });
+    this.nextBtn.addEventListener('click', () => {
+      this.stopped = false;
+      this.showSlide(this.slides[++this.slideIndex]);
+    });
   },
 
-  showImage(path) {
-    this.img.src = path;
+  run() {
+    this.slides = this.images.map(
+      img =>
+        new Slide(
+          { node: this.img, path: img.relativeLocalPath },
+          this.progressBar,
+          10
+        )
+    );
+
+    this.showSlide(this.slides[this.slideIndex]);
+    Events.listen(EventType.SLIDE_END, () => {
+      console.log('end', this);
+
+      if (this.slideIndex + 1 < this.slides.length) {
+        this.showSlide(this.slides[++this.slideIndex]);
+      }
+    });
+  },
+
+  showSlide(slide) {
+    this.currentSlide?.stop();
+    this.currentSlide = slide;
+    this.currentSlide.prepare();
+    this.currentSlide.start();
+    this.resetButtons();
+  },
+
+  resetButtons() {
+    this.prevBtn.disabled = this.slideIndex <= 0;
+    this.nextBtn.disabled = this.slideIndex + 1 >= this.images.length;
+    this.stopBtn.textContent = this.stopped ? 'Go again' : 'Stop';
   },
 };
 

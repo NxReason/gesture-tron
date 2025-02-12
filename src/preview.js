@@ -11,7 +11,7 @@ export const Preview = {
     this.node.textContent = ``;
     const imgNodes = images.map(img => {
       const imgNode = document.createElement('img');
-      imgNode.src = img.relativeLocalPath;
+      imgNode.src = img.sourcePath;
       imgNode.classList.add('preview-image');
       return imgNode;
     });

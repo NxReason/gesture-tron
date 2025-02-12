@@ -40,6 +40,11 @@ class Image {
 
     this.relativeLocalPath = `${LOCAL_FOLDER}/${name}`;
     this.localPath = path.resolve(__dirname, this.relativeLocalPath);
+
+    this.sourcePath = this.fullPath;
+    if (process.env.DEV) {
+      this.sourcePath = this.relativeLocalPath;
+    }
   }
 
   async copyToLocal() {

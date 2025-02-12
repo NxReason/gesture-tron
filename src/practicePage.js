@@ -118,7 +118,7 @@ const PracticePage = {
     this.slides = this.images.map(
       img =>
         new Slide(
-          { node: this.img, path: img.relativeLocalPath },
+          { node: this.img, path: img.sourcePath },
           this.progressBar,
           this.seconds
         )
